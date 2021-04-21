@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    background:#fff;
+    font-family: 'Courier New', Courier, monospace;
+    -webkit-font-smothing:antialiased;
+    color: #000;
+    scroll-behavior: smooth;
+}
+    /*nav*/
+header{
+    background-color: lightgreen;
+}
+nav li{
+    cursor: pointer;
+    color: white;
+}
+nav li a{
+    color: white;
+}
+    /*banner*/
+.banner img{
+    height: 450px;
+}
+    /*content*/
+.content{
+    display: grid;
+    grid-gap:100px;
+    grid-template-columns: 3fr 1fr;
+}
+    /*about inec*/
+.about-inec{
+    text-align: justify;
+}
+#about-project{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 300px;
+    padding: 20px;
+    font-weight:bold;
+}
+#num-of-voters{
+    font-style: italic;
+    font-size: large;
+}
+    /*footer*/
+footer{
+    text-align: center;
+    background-color: black;
+    color:white;
+    height: 100px;
+    padding: 10px;
+}
+.fmenu li{
+    display: inline;
+}
+.fmenu li a{
+    color: white;
+}
