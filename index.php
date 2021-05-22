@@ -1,6 +1,11 @@
 <?php
 include "connection.php";
 session_start();
+
+//get all voters info
+$sel_all_voters = "select * from voters";
+$run = mysqli_query($con, $sel_all_voters);
+$voter_num = mysqli_num_rows($run);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +32,7 @@ session_start();
   <header id="page-top">
     <nav class="navbar navbar-b navbar-trans navbar-expand-md " id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll" href="index.html" id="logo">
+        <a class="navbar-brand js-scroll" href="index.php" id="logo">
           <img src="images/logo.png" alt="logo">
         </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
@@ -91,7 +96,7 @@ session_start();
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Voter Login</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" class="bg-danger">&times;</span>
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
@@ -106,7 +111,7 @@ session_start();
             <input type="password" name="password" class="form-control" required placeholder="enter your password">
           </div>
           <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-success" name="login">Submit</button>
       </div>
         </form>
@@ -158,7 +163,7 @@ session_start();
 
           <div class="form-group">
             <label for="middle-name"> Middle Name:</label>
-            <input type="text" name="middlename" class="form-control" required placeholder="enter your middle name">
+            <input type="text" name="middlename" class="form-control" placeholder="enter your middle name">
           </div>
 
             <div class="form-group">
@@ -167,8 +172,8 @@ session_start();
             </div>
 
             <div class="form-group">
-              <label for="age"> Age:</label>
-              <input type="date" name="age" class="form-control" required placeholder="enter your age as at last birthday">
+              <label for="age"> DOB:</label>
+              <input type="date" name="age" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -240,8 +245,8 @@ session_start();
               <input type="file" name="passport" class="form-control" required>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="register">Submit</button>
+              <button type="button" class="btn" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" name="register">Submit</button>
             </div>
         </form>
       </div>
@@ -265,16 +270,12 @@ if (isset($_POST['register'])) {
 
     if ($pass !== $comfirm_pass ) {
         echo "
-        <div class='alert alert-danger'>
-        passwords dont match
-        </div>
+        <script> alert('passwords dont match')
         ";
     }
     if (strlen($pass) < 8) {
         echo "
-        <div class='alert alert-danger'>
-        passwords must be eight characters or longer
-        </div>
+        <script> alert ('password must be longer than eight characters) </script>
         ";
     }
    /* $select = "select * from voters";
@@ -293,7 +294,7 @@ if (isset($_POST['register'])) {
 		$set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$voterID = substr(str_shuffle($set), 0, 15);
 
-       $insert = "insert into voters (voters_id, first_name, middle_name, last_name, age, password, address, state_of_residence, LGA_of_residence, state_of_origin, LGA_of_origin, NIN, passport, date_registerd) values ('$voterID', '$firstname', '$middlename', '$lastname', '$age', '$pass_hash', '$address', '$state_of_residence', '$LGA_of_residence', '$state_of_origin', '$LGA_of_origin', '$NIN', '$passport', NOW())";
+       $insert = "insert into voters (voters_id, first_name, middle_name, last_name, age, password, address, state_of_residence, LGA_of_residence, state_of_origin, LGA_of_origin, NIN, passport, voted, date_registerd) values ('$voterID', '$firstname', '$middlename', '$lastname', '$age', '$pass_hash', '$address', '$state_of_residence', '$LGA_of_residence', '$state_of_origin', '$LGA_of_origin', '$NIN', '$passport', 'no', NOW())";
         $run = mysqli_query($con, $insert);
         if ($run) {
           $_SESSION['nin'] = $NIN;
@@ -360,24 +361,16 @@ if (isset($_POST['register'])) {
           </section>
           <aside class="sideber">
               <div class="gadget">
-                <h2 class="star"><span>Sidebar</span> Menu</h2>
-                <ul class="sb_menu">
-                  <li><a href="index.php">Home</a></li>
-                  <li><a href="register.php">Register Voter</a></li>
-               
-                  <li><a href="admin/index.php">Administrator</a></li>
-                </ul>
-                </div>
-              <div class="gadget">
                 <h2 class="star"><span>News Update</span></h2>
                 <ul class="ex_menu">
-                  <li><a href="http://www.dreamtemplate.com" title="Website Templates">Voter's Registration</a><br />
-                  The Registers of Voters are now on the website, for intending voters to check their status before Election Day. The registers will be updated after the Continuous Voter Registration (CVR) .</li>
-                  <li><a href="http://www.templatesold.com" title="WordPress Themes">The Electoral Institute (TEI)</a><br />
+                  <li> Voter's Registration<br />
+                  The Registers of Voters are now on the website, for intending voters to check their status before Election Day.</li>
+                  <hr>
+                  <li>The Electoral Institute (TEI)<br />
                   The Electoral Institute (TEI) is an organ of the Independent National Electoral Commission responsible for training and electoral research</li>
-                  <li><a href="http://www.imhosted.com" title="Affordable Hosting">eTRAC </a><br />
+                  <hr>
+                  <li>eTRAC<br />
                   eTRAC is an INEC Transparency Project, building trust through Transperency by making signed Polling Unit Result Sheets as pasted at the Polling Unit available.</li>
-                  <li></li>
                 </ul>
               </div>
       </aside>
@@ -391,7 +384,7 @@ if (isset($_POST['register'])) {
                 The registers will be updated after the Continuous Voter Registration (CVR). 
                 The main aim of this project is to develop an online voters registration and voting platform.</p>
             </div>
-            <center>We currently have <span id="num-of-voters">500</span> voters registered on this platform</center>
+            <center>We currently have <span id="num-of-voters"><?php echo $voter_num ;?></span> voters registered on this platform</center>
           </div>
             </section>
         </main>

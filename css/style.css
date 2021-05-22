@@ -49,6 +49,12 @@ nav li a{
     font-style: italic;
     font-size: large;
 }
+    /*aside*/
+.ex_menu li{
+    color: black;
+    list-style-type: none;
+}
+
     /*footer*/
 footer{
     text-align: center;
